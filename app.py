@@ -47,16 +47,21 @@ def login_as():
 @app.route('/oauth/token', methods=['POST'])
 def token_callback():
     '''Retrieve Token to ST APP'''
-    from lib.token_methods import get_token
+    from lib.token_methods import get_token, refresh
+    from lib.app_dao import validate_redirect_uri
+
+    grant_type = request.form.get('grant_type')
+    code = request.form.get('code')
+    refresh_token = request.form.get('refresh_token')
+    redirect_uri = request.form.get('redirect_uri')
 
     # Retrieve token 
     if validate_token_callback(request):
-        code = request.form.get('code')
-        grant_type = request.form.get('grant_type')
+        if code and grant_type == 'authorization_code':
+            if validate_redirect_uri(redirect_uri):
+                return get_token(code)
 
-        '''Either 'authorization_code' & 'refresh_token' grant_types will be handled at <get_token> method'''
-        token = get_token(code, grant_type)
-        return token
-
+        if refresh_token and grant_type == 'refresh_token':
+            return refresh(refresh_token)
 
     return {}, 403

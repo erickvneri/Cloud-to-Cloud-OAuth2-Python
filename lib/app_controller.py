@@ -48,9 +48,8 @@ def validate_token_callback(request):
 
     client_id = request.form.get('client_id')
     client_secret = request.form.get('client_secret')
-    grant_type = request.form.get('grant_type')
-    redirect_uri = request.form.get('redirect_uri')
-    
+    grant_type = request.form.get('redirect_uri')
+
     # Requeset Validation
     if validate_client_id(client_id):
         if validate_client_secret(client_secret):
