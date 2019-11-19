@@ -132,4 +132,4 @@ dmypy.json
 .settings.json
 
 # SQLAlchemy DB
-db.users
+./db/db.users
