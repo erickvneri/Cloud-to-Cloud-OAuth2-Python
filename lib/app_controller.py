@@ -27,7 +27,8 @@ def auth_verification(request):
 #2 /login Endpoint Handler
 def login_as_callback(request):
     '''User's Data Params'''
-    from lib.app_dao import hash_it, create_token
+    from lib.app_dao import hash_it
+    from lib.token_methods import create_token
 
     # User credentials
     email = request.args.get('email')
